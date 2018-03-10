@@ -5,8 +5,7 @@ Gameplay is available: https://youtu.be/X9GnQvv_bo4
 
 ## Features
 
-- Two game modes: (**Player vs. Computer**) and (Player vs. Player)
-- 3 difficulty levels for PvC (Easy, Medium and **Hard**)
+- 3 difficulty levels (Easy, Medium and **Hard**)
 - Different board sizes: 3x3, 4x4, 5x5
 - **Hint** mechanism available at all game scenarios.
 
