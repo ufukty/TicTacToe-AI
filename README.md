@@ -28,4 +28,4 @@ Random moves
 
 ## Known issues
 
-- If board size is 5x5 and game mode is hard, it takes to much time to calculate first and a few next moves.
+1. As board size increases, decision time is dramatically increases. For 3x3 board size, tree has 9! nodes at start. But for 4x4 board size, tree has 16! nodes, so, it takes 5 minutes to start. I literally never saw if 5x5-hard mode is working. Lol. (Numbers only for comparison, assumed there is no path has lower depth than others and no pruning) If anyone there trying to achieve this problem, I'll suggest a trick: Some board states at the tree are totaly same, for example, just one X token on the (upper-left) or (upper-right) or (bottom-left) or (bottom-right). Those same-states are sutiable to pruning. 
