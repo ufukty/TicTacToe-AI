@@ -1,7 +1,7 @@
 # TicTacToe-AI
 Visual C++ implementation of unbeatable TicTacToe game with Alpha-Beta Pruning.
 
-Gameplay is available: https://youtu.be/X9GnQvv_bo4
+![In-game footage](img/TicTacToe.gif)
 
 ## Features
 
