@@ -1,6 +1,5 @@
 #include "ui.h"
 #include "board.h"
-#include <Windows.h>
 #include <functional>
 #include <iostream>
 #include <math.h>
