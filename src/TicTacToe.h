@@ -11,11 +11,10 @@
 
 #pragma once
 
-#include "TicTacToeMacros.h"
-#include "TicTacToeStructures.h"
-
 #include "TicTacToeBoard.h"
 #include "TicTacToeDecision.h"
+#include "TicTacToeMacros.h"
+#include "TicTacToeStructures.h"
 #include "TicTacToeUI.h"
 #include "TicTacToeUserHandler.h"
 

@@ -17,7 +17,7 @@ namespace TicTacToe {
 
 TicTacToe::TicTacToe(void) {
   game.overall_score.computer = game.overall_score.user = 0;
-  game.status = GAME_INITIALIZED;
+  game.status                                           = GAME_INITIALIZED;
 }
 
 void TicTacToe::prepare_for_start() {
@@ -90,7 +90,7 @@ void TicTacToe::play(void) {
       else if (user_action == USER__MOVE_REQUEST_OUT_OF_RANGE_BOTTOM)
         display_message("You can't go further lower.");
       else if (user_action == USER__HINT) {
-        Move move = decision_hard_mode(board);
+        Move move      = decision_hard_mode(board);
         game.pointer.y = move.y;
         game.pointer.x = move.x;
         display_message("This is the best move.");
@@ -163,4 +163,4 @@ bool TicTacToe::start_game(void) {
   return true;
 }
 
-}
+} // namespace TicTacToe

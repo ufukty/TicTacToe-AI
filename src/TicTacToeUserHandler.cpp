@@ -9,10 +9,9 @@ Gameplay available at https://youtu.be/X9GnQvv_bo4
 GNU General Public License v3.0
 */
 
+#include "TicTacToeUserHandler.h"
 #include <conio.h>
 #include <iostream>
-
-#include "TicTacToeUserHandler.h"
 
 namespace TicTacToe {
 
@@ -54,11 +53,11 @@ __USER_ACTION UserHandler::input_on_menu_screen(Game_Data &game) {
     switch (input_character) {
     case ' ': {
       if (game.pointer.y == 0) {
-        game.user_token = TOKEN_X;
+        game.user_token     = TOKEN_X;
         game.computer_token = TOKEN_O;
         return USER__NEXT_MENU_PAGE;
       } else if (game.pointer.y == 1) {
-        game.user_token = TOKEN_O;
+        game.user_token     = TOKEN_O;
         game.computer_token = TOKEN_X;
         return USER__NEXT_MENU_PAGE;
       } else {

@@ -9,6 +9,8 @@ Gameplay available at https://youtu.be/X9GnQvv_bo4
 GNU General Public License v3.0
 */
 
+#include "TicTacToeUI.h"
+#include "TicTacToeBoard.h"
 #include <Windows.h>
 #include <functional>
 #include <iostream>
@@ -16,9 +18,6 @@ GNU General Public License v3.0
 #include <stdlib.h> // srand, rand
 #include <string>
 #include <time.h> // time
-
-#include "TicTacToeBoard.h"
-#include "TicTacToeUI.h"
 
 namespace TicTacToe {
 
@@ -214,8 +213,8 @@ void UI::render_opening_screen(void) {
   set_scene(
       [](double f) -> void {
         auto t = [](double t, int line_number) -> char {
-          char tones[] = {' ', (char)176, (char)177, (char)178, (char)219};
-          double fade = pow(
+          char   tones[] = {' ', (char)176, (char)177, (char)178, (char)219};
+          double fade    = pow(
               sin(t * 3.1415926535 * 0.5 * (-(double)line_number / 50 + 1) + 3.1415926535 / 2), 3);
           return fade > 0 ? tones[(unsigned int)((fade * 4.99))] : tones[0];
         };
@@ -437,8 +436,8 @@ void UI::render_menu_screen(Game_Data &game) {
 }
 
 void UI::print_board(Board &board, Game_Data &game) {
-  char t[] = {(char)196, (char)179, (char)197, (char)218, (char)194, (char)191,
-              (char)180, (char)217, (char)193, (char)192, (char)195};
+  char        t[] = {(char)196, (char)179, (char)197, (char)218, (char)194, (char)191,
+                     (char)180, (char)217, (char)193, (char)192, (char)195};
   std::string row = "";
 
   auto field = [&](int y, int x) {

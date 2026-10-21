@@ -16,11 +16,11 @@ namespace TicTacToe {
 // CONSTRUCTORS
 
 Board::Board(__BOARD_SIZE board_size) {
-  _meta.board_size = board_size;
-  _meta.total_move_count = 0;
-  _meta.board_state = BOARD_STATE__EMPTY;
+  _meta.board_size          = board_size;
+  _meta.total_move_count    = 0;
+  _meta.board_state         = BOARD_STATE__EMPTY;
   _meta.maximum_move_number = board_size * board_size;
-  _board = new __TOKEN *[board_size];
+  _board                    = new __TOKEN *[board_size];
   for (int y = 0; y < board_size; y++) {
     _board[y] = new __TOKEN[board_size];
     for (int x = 0; x < board_size; x++)
@@ -62,23 +62,23 @@ bool Board::undo(void) {
     return false;
   if (_trace.size() <= 0)
     return false;
-  Step last_change = _trace.back();
+  Step last_change                     = _trace.back();
   _board[last_change.y][last_change.x] = TOKEN_EMPTY;
   _meta.total_move_count--;
   _meta.board_state = last_change.board_state;
   _trace.pop_back();
   return true;
 }
-const Board::Meta &Board::meta(void) { return _meta; }
+const Board::Meta       &Board::meta(void) { return _meta; }
 const std::vector<Step> &Board::trace(void) { return _trace; }
-bool Board::is_game_ended(void) {
+bool                     Board::is_game_ended(void) {
   check_board_state();
   return (_meta.board_state == BOARD_STATE__DRAW || _meta.board_state == BOARD_STATE__X_WIN ||
           _meta.board_state == BOARD_STATE__O_WIN);
 }
 std::deque<unsigned int> Board::successor_index_list(void) {
   std::deque<unsigned int> list;
-  unsigned int linear_index = 0;
+  unsigned int             linear_index = 0;
   for (int y = 0; y < _meta.board_size; y++)
     for (int x = 0; x < _meta.board_size; x++, linear_index++)
       if (_board[y][x] == TOKEN_EMPTY)

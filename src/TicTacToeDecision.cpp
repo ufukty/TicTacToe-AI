@@ -11,7 +11,6 @@ GNU General Public License v3.0
 
 #include "TicTacToeDecision.h"
 #include "TicTacToeBoard.h"
-
 #include <Windows.h>
 
 namespace TicTacToe {
@@ -29,14 +28,14 @@ Move Decision::decision_easy_mode(Board &board) {
   if (available_moves.size() == 0)
     return Move{-1, -1, false};
 
-  unsigned int rnd = rand() % available_moves.size();
-  Move ret_val = available_moves[rnd];
+  unsigned int rnd     = rand() % available_moves.size();
+  Move         ret_val = available_moves[rnd];
   return ret_val;
 }
 
 Move Decision::decision_medium_mode(Board &board) {
-  __TOKEN current_token = board.next_token();
-  __TOKEN next_token = current_token == TOKEN_X ? TOKEN_O : TOKEN_X;
+  __TOKEN       current_token = board.next_token();
+  __TOKEN       next_token    = current_token == TOKEN_X ? TOKEN_O : TOKEN_X;
   __BOARD_STATE win_state = board.next_token() == TOKEN_X ? BOARD_STATE__X_WIN : BOARD_STATE__O_WIN;
   __BOARD_STATE lose_state =
       board.next_token() == TOKEN_X ? BOARD_STATE__O_WIN : BOARD_STATE__X_WIN;
@@ -81,7 +80,7 @@ int Decision::alpha_beta_max(Board &board, int alpha, int beta) {
   if (board.is_game_ended()) // Evaluation the value of leaves according to X's condition.
     return alpha_beta_evaluate(board);
 
-  int value;
+  int                      value;
   std::deque<unsigned int> successors =
       board.successor_index_list(); // successor'lerin listesi oluşturuluyor
   while (successors.size() > 0) {
@@ -106,7 +105,7 @@ int Decision::alpha_beta_min(Board &board, int alpha, int beta) {
   if (board.is_game_ended()) // Evaluation
     return alpha_beta_evaluate(board);
 
-  int value;
+  int                      value;
   std::deque<unsigned int> successors =
       board.successor_index_list(); // successor'lerin listesi oluşturuluyor
   while (successors.size() > 0) {
