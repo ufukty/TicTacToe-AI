@@ -1,4 +1,4 @@
-#include "TicTacToe.h"
+#include "ticTacToe.h"
 #include <string>
 
 namespace TicTacToe {
