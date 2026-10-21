@@ -1,4 +1,5 @@
 #include "ticTacToe.h"
+#include "portable.cpp"
 #include <string>
 
 namespace TicTacToe {
@@ -126,7 +127,7 @@ void TicTacToe::play(void) {
   render_game_screen(board, game);
 
   game.status = GAME_ABOUT_TO_RESTART;
-  _getch();
+  GetChar();
 }
 
 void TicTacToe::reset_pointer(void) {
