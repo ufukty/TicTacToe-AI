@@ -1,6 +1,6 @@
 #include "userHandler.h"
+#include "portable.cpp"
 #include <iostream>
-
 namespace TicTacToe {
 
 UserHandler::UserHandler(void) {}
@@ -8,7 +8,7 @@ UserHandler::UserHandler(void) {}
 __USER_ACTION UserHandler::input_on_menu_screen(Game_Data &game) {
 
   std::cout << " ";
-  char input_character = _getch();
+  char input_character = GetChar();
 
   switch (game.status) {
   case GAME_MENU_SCREEN_1: {
@@ -105,7 +105,7 @@ __USER_ACTION UserHandler::input_on_menu_screen(Game_Data &game) {
 __USER_ACTION UserHandler::input_on_game_screen(Game_Data &game) {
   std::cout << " ";
 
-  char input_character = _getch();
+  char input_character = GetChar();
 
   switch (input_character) {
   case 'W':

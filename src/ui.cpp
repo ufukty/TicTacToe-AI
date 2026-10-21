@@ -1,5 +1,6 @@
 #include "ui.h"
 #include "board.h"
+#include "portable.cpp"
 #include <functional>
 #include <iostream>
 #include <math.h>
@@ -15,7 +16,7 @@ void UI::prepare_for_start(void) { message_flag = false; }
 
 template <typename T> void UI::set_scene(T &callback, int iteration, int interval) {
   for (int frame = 0; frame < iteration; frame++) {
-    system("cls");
+    Clean();
     callback((double)frame / (double)iteration);
     Sleep(interval);
   }
@@ -333,16 +334,16 @@ void UI::render_opening_screen(void) {
       },
       50, 5);
 
-  system("cls");
+  Clean();
   std::cout << "\n\n\n\n\n\n\n\n\n\n\n                                        Ufuk Tan - 2017";
   Sleep(1000);
-  system("cls");
+  Clean();
 }
 
 void UI::render_menu_screen(Game_Data &game) {
   char t = (char)254;
 
-  system("cls");
+  Clean();
   header(game);
 
   if (game.status == GAME_MENU_SCREEN_1) {
@@ -527,7 +528,7 @@ void UI::display_message(const char str[]) {
 }
 
 void UI::render_game_screen(Board &board, Game_Data &game) {
-  system("cls");
+  Clean();
 
   header(game);
 
