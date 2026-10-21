@@ -11,40 +11,36 @@ GNU General Public License v3.0
 
 #pragma once
 
+#include "TicTacToeBoard.h"
 #include "TicTacToeMacros.h"
 #include "TicTacToeStructures.h"
-#include "TicTacToeBoard.h"
 
 namespace TicTacToe {
 
-	class UI {
-	private:
+class UI {
+private:
+  template <typename T> void set_scene(T &callback, int iteration, int interval);
+  void repeat_print(int t, char c);
+  void repeat_str(std::string &, int t, char c);
+  void header(Game_Data &);
+  void print_board(Board &, Game_Data &);
 
-		template<typename T>void set_scene(T &callback, int iteration, int interval);
-		void repeat_print(int t, char c);
-		void repeat_str(std::string &, int t, char c);
-		void header(Game_Data &);
-		void print_board(Board &, Game_Data &);
+  std::string message;
+  bool message_flag;
 
-		std::string message;
-		bool message_flag;
+protected:
+  void centered(std::string &);
 
-	protected:
+  void render_opening_screen(void);
+  void render_menu_screen(Game_Data &);
+  void render_game_screen(Board &, Game_Data &);
 
-		void centered(std::string &);
+  void display_message(const char[]);
 
-		void render_opening_screen(void);
-		void render_menu_screen(Game_Data &);
-		void render_game_screen(Board &, Game_Data &);
+public:
+  UI(void);
 
-		void display_message(const char[]);
+  void prepare_for_start(void);
+};
 
-	public:
-
-		UI(void);
-
-		void prepare_for_start(void);
-
-	};
-
-}
+} // namespace TicTacToe

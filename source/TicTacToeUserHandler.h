@@ -15,14 +15,13 @@ GNU General Public License v3.0
 #include "TicTacToeStructures.h"
 
 namespace TicTacToe {
+class UserHandler {
+public:
+  UserHandler();
 
-	class UserHandler {
-	public:
-		UserHandler();
+protected:
+  __USER_ACTION input_on_menu_screen(Game_Data &);
+  __USER_ACTION input_on_game_screen(Game_Data &);
+};
 
-	protected:
-		__USER_ACTION input_on_menu_screen(Game_Data &);
-		__USER_ACTION input_on_game_screen(Game_Data &);
-	};
-
-}
+} // namespace TicTacToe

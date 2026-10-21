@@ -9,11 +9,11 @@ Gameplay available at https://youtu.be/X9GnQvv_bo4
 GNU General Public License v3.0
 */
 
-#include <iostream>
 #include "TicTacToe.h"
+#include <iostream>
 
 int main(void) {
-	TicTacToe::TicTacToe engine;
-	engine.start_game();
-	return EXIT_SUCCESS;
+  TicTacToe::TicTacToe engine;
+  engine.start_game();
+  return EXIT_SUCCESS;
 }

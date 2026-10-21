@@ -11,28 +11,25 @@ GNU General Public License v3.0
 
 #pragma once
 
+#include "TicTacToeBoard.h"
 #include "TicTacToeMacros.h"
 #include "TicTacToeStructures.h"
-#include "TicTacToeBoard.h"
 
 namespace TicTacToe {
 
-	class Decision {
+class Decision {
 
-	protected:
+protected:
+  Decision(void);
 
-		Decision(void);
+  Move decision_easy_mode(Board &board);
+  Move decision_medium_mode(Board &board);
+  Move decision_hard_mode(Board &board);
 
-		Move decision_easy_mode(Board &board);
-		Move decision_medium_mode(Board &board);
-		Move decision_hard_mode(Board &board);
+private:
+  int alpha_beta_max(Board &, int, int);
+  int alpha_beta_min(Board &, int, int);
+  int alpha_beta_evaluate(Board &);
+};
 
-	private:
-
-		int alpha_beta_max(Board &, int, int);
-		int alpha_beta_min(Board &, int, int);
-		int alpha_beta_evaluate(Board &);
-
-	};
-
-}
+} // namespace TicTacToe

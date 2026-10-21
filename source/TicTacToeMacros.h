@@ -66,7 +66,6 @@ GNU General Public License v3.0
 #define GAME_ABOUT_TO_RESTART 60
 #define GAME_FINISHED 70
 
-
 ///////////////////////////////////  (UserHandler)
 
 #define __USER_ACTION int
@@ -96,4 +95,3 @@ GNU General Public License v3.0
 #define TREE_NOT_FOUND 500
 
 //////////////////////////////// AlphaBetaDetails
-
