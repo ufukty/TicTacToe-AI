@@ -1,5 +1,5 @@
 #include "ticTacToe.h"
-#include "portable.cpp"
+#include "portable.h"
 #include <string>
 
 namespace TicTacToe {

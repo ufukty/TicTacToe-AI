@@ -1,3 +1,5 @@
+#pragma once
+
 #ifdef _WIN32
 int GetChar() { return _getch() }
 #else

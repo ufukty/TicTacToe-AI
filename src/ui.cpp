@@ -1,6 +1,6 @@
 #include "ui.h"
 #include "board.h"
-#include "portable.cpp"
+#include "portable.h"
 #include <functional>
 #include <iostream>
 #include <math.h>
