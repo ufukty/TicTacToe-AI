@@ -1,11 +1,11 @@
 #pragma once
 
-#include "TicTacToeBoard.h"
-#include "TicTacToeDecision.h"
-#include "TicTacToeMacros.h"
-#include "TicTacToeStructures.h"
-#include "TicTacToeUI.h"
-#include "TicTacToeUserHandler.h"
+#include "board.h"
+#include "decision.h"
+#include "macros.h"
+#include "structures.h"
+#include "ui.h"
+#include "userHandler.h"
 
 namespace TicTacToe {
 

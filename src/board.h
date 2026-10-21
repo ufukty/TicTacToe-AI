@@ -1,7 +1,7 @@
 #pragma once
 
-#include "TicTacToeMacros.h"
-#include "TicTacToeStructures.h"
+#include "macros.h"
+#include "structures.h"
 #include <deque>
 #include <iostream>
 #include <vector>

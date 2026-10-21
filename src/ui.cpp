@@ -1,5 +1,5 @@
-#include "TicTacToeUI.h"
-#include "TicTacToeBoard.h"
+#include "ui.h"
+#include "board.h"
 #include <Windows.h>
 #include <functional>
 #include <iostream>
