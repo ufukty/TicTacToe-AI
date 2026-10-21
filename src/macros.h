@@ -77,7 +77,7 @@
 
 ////////////////////////////////// Decision
 
-#define __DIFFICULTY __int8
+#define __DIFFICULTY std::int8_t
 #define HARD 10
 #define MEDIUM 20
 #define EASY 30
