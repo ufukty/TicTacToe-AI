@@ -155,15 +155,12 @@ bool TicTacToe::start_game(void) {
   render_opening_screen();
 
   while (true) { // Play again
-
     menu();
-
     prepare_for_start();
-
     play();
   }
 
   return true;
 }
 
-} // namespace TicTacToe
+}
