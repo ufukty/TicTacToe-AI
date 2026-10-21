@@ -5,8 +5,9 @@
 namespace TicTacToe {
 
 TicTacToe::TicTacToe(void) {
-  game.overall_score.computer = game.overall_score.user = 0;
-  game.status                                           = GAME_INITIALIZED;
+  game.scoreboard.user     = 0;
+  game.scoreboard.computer = 0;
+  game.status              = GAME_INITIALIZED;
 }
 
 void TicTacToe::prepare_for_start() {
@@ -116,10 +117,10 @@ void TicTacToe::play(void) {
 
   if (end == 1) {
     display_message("You win");
-    game.overall_score.user++;
+    game.scoreboard.user++;
   } else if (end == 2) {
     display_message("You lose");
-    game.overall_score.computer++;
+    game.scoreboard.computer++;
   } else if (end == 3)
     display_message("Draw");
 

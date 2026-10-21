@@ -39,13 +39,13 @@ void UI::centered(std::string &text) {
 
 void UI::header(Game_Data &game) {
   std::string left = "";
-  if (game.overall_score.computer + game.overall_score.user == 0) {
+  if (game.scoreboard.computer + game.scoreboard.user == 0) {
     left += "NEW GAME";
   } else {
     left += "PLAYER ( ";
-    left += std::to_string(game.overall_score.user);
+    left += std::to_string(game.scoreboard.user);
     left += " - ";
-    left += std::to_string(game.overall_score.computer);
+    left += std::to_string(game.scoreboard.computer);
     left += " ) COMPUTER";
   }
   std::string right = "KEYS: W, A, S, D, SPACE, H";

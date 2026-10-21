@@ -4,6 +4,14 @@
 
 namespace TicTacToe {
 
+struct Coordinate {
+  int x, y;
+};
+
+struct Scoreboard {
+  int computer, user;
+};
+
 struct Game_Data {
   __GAME_STATUS status;
   __TOKEN       turn_owner;
@@ -12,12 +20,8 @@ struct Game_Data {
   __BOARD_SIZE  board_size;
   __DIFFICULTY  difficulty;
   unsigned int  total_move;
-  struct {
-    int computer, user;
-  } overall_score;
-  struct {
-    int x, y;
-  } pointer;
+  Scoreboard    scoreboard;
+  Coordinate    pointer;
 };
 
 struct ab_res {
