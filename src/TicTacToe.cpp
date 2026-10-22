@@ -21,7 +21,7 @@ void TicTacToe::enable_logs(void) {}
 void TicTacToe::print_log(std::string log) {}
 
 void TicTacToe::menu(void) {
-  __USER_ACTION user_action;
+  UserAction user_action;
 
   reset_pointer();
   game.status = GAME_MENU_SCREEN_1;
@@ -45,7 +45,7 @@ void TicTacToe::menu(void) {
 }
 
 void TicTacToe::play(void) {
-  __USER_ACTION user_action;
+  UserAction user_action;
 
   game.status = GAME_PLAYING;
   reset_pointer();
@@ -89,7 +89,7 @@ void TicTacToe::play(void) {
       if (user_action != USER__FILL_REQUEST)
         continue;
 
-      __SEAL_RESPONSE response = board.seal(game.pointer.y, game.pointer.x, true);
+      SealResponse response = board.seal(game.pointer.y, game.pointer.x, true);
 
       if (response == SEAL_SUCCESS) {
         ;

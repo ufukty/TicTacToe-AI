@@ -20,12 +20,11 @@ Move Decision::decision_easy_mode(Board &board) {
 }
 
 Move Decision::decision_medium_mode(Board &board) {
-  __TOKEN       current_token = board.next_token();
-  __TOKEN       next_token    = current_token == TOKEN_X ? TOKEN_O : TOKEN_X;
-  __BOARD_STATE win_state = board.next_token() == TOKEN_X ? BOARD_STATE__X_WIN : BOARD_STATE__O_WIN;
-  __BOARD_STATE lose_state =
-      board.next_token() == TOKEN_X ? BOARD_STATE__O_WIN : BOARD_STATE__X_WIN;
-  __BOARD_STATE board_state;
+  Token      current_token = board.next_token();
+  Token      next_token    = current_token == TOKEN_X ? TOKEN_O : TOKEN_X;
+  BoardState win_state  = board.next_token() == TOKEN_X ? BOARD_STATE__X_WIN : BOARD_STATE__O_WIN;
+  BoardState lose_state = board.next_token() == TOKEN_X ? BOARD_STATE__O_WIN : BOARD_STATE__X_WIN;
+  BoardState board_state;
   for (int y = 0; y < board.meta.board_size; y++) { // Kazanma durumları
     for (int x = 0; x < board.meta.board_size; x++) {
       if (board.get(y, x) == TOKEN_EMPTY) {

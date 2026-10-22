@@ -5,7 +5,7 @@ namespace TicTacToe {
 
 UserHandler::UserHandler(void) {}
 
-__USER_ACTION UserHandler::input_on_menu_screen(Game_Data &game) {
+UserAction UserHandler::input_on_menu_screen(Game_Data &game) {
 
   std::cout << " ";
   char input_character = GetChar();
@@ -102,7 +102,7 @@ __USER_ACTION UserHandler::input_on_menu_screen(Game_Data &game) {
   }
 }
 
-__USER_ACTION UserHandler::input_on_game_screen(Game_Data &game) {
+UserAction UserHandler::input_on_game_screen(Game_Data &game) {
   std::cout << " ";
 
   char input_character = GetChar();

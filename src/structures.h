@@ -13,15 +13,15 @@ struct Scoreboard {
 };
 
 struct Game_Data {
-  __GAME_STATUS status;
-  __TOKEN       turn_owner;
-  __TOKEN       user_token;
-  __TOKEN       computer_token;
-  __BOARD_SIZE  board_size;
-  __DIFFICULTY  difficulty;
-  unsigned int  total_move;
-  Scoreboard    scoreboard;
-  Coordinate    pointer;
+  GameStatus   status;
+  Token        turn_owner;
+  Token        user_token;
+  Token        computer_token;
+  BoardSize    board_size;
+  Difficulty   difficulty;
+  unsigned int total_move;
+  Scoreboard   scoreboard;
+  Coordinate   pointer;
 };
 
 struct ab_res {
@@ -29,15 +29,15 @@ struct ab_res {
 };
 
 struct Move {
-  int     y, x;
-  __TOKEN token;
+  int   y, x;
+  Token token;
 };
 
 struct Step {
-  unsigned int  y, x;
-  __TOKEN       token;
-  __BOARD_STATE board_state;
-  bool          real_move; // or just calculation
+  unsigned int y, x;
+  Token        token;
+  BoardState   board_state;
+  bool         real_move; // or just calculation
 };
 
 } // namespace TicTacToe

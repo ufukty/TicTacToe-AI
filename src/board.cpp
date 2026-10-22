@@ -2,14 +2,14 @@
 
 namespace TicTacToe {
 
-Board::Board(__BOARD_SIZE board_size) {
+Board::Board(BoardSize board_size) {
   meta.board_size          = board_size;
   meta.total_move_count    = 0;
   meta.board_state         = BOARD_STATE__EMPTY;
   meta.maximum_move_number = board_size * board_size;
-  _board                   = new __TOKEN *[board_size];
+  _board                   = new Token *[board_size];
   for (int y = 0; y < board_size; y++) {
-    _board[y] = new __TOKEN[board_size];
+    _board[y] = new Token[board_size];
     for (int x = 0; x < board_size; x++)
       _board[y][x] = TOKEN_EMPTY;
   }
@@ -20,13 +20,13 @@ Board::~Board(void) {
   delete[] _board;
 }
 
-__TOKEN Board::next_token(void) {
+Token Board::next_token(void) {
   if (meta.board_state == BOARD_STATE__EMPTY || _trace.back().token == TOKEN_O)
     return TOKEN_X;
   else
     return TOKEN_O;
 }
-__SEAL_RESPONSE Board::seal(unsigned int y, unsigned int x, bool real_move, __TOKEN token) {
+SealResponse Board::seal(unsigned int y, unsigned int x, bool real_move, Token token) {
 
   if (token == TOKEN_AUTO)
     token = next_token();
@@ -80,13 +80,13 @@ bool Board::set_predicted_successor(void) {
   temp.predicted_move[meta.total_move_count].x = _trace.back().x;
   return true;
 }
-__BOARD_STATE Board::board_state(void) { return meta.board_state; }
-__BOARD_STATE Board::check_board_state(void) {
+BoardState Board::board_state(void) { return meta.board_state; }
+BoardState Board::check_board_state(void) {
 
   if (meta.board_state != BOARD_STATE__NOT_CALCULATED)
     return meta.board_state;
 
-  __TOKEN sequence_sum = TOKEN_INITIAL, winner = TOKEN_INITIAL;
+  Token sequence_sum = TOKEN_INITIAL, winner = TOKEN_INITIAL;
 
   for (int y = 0; y < meta.board_size; y++) { // Yatay taramalar
     sequence_sum = _board[y][0];
@@ -142,6 +142,6 @@ __BOARD_STATE Board::check_board_state(void) {
 
   return meta.board_state;
 }
-__TOKEN Board::get(unsigned int y, unsigned int x) { return _board[y][x]; }
+Token Board::get(unsigned int y, unsigned int x) { return _board[y][x]; }
 
 } // namespace TicTacToe

@@ -11,21 +11,21 @@
 
 // Board
 
-#define __SEAL_RESPONSE int
+#define SealResponse int
 #define SEAL_SUCCESS 300
 #define SEAL_NOT_YOUR_TURN 310
 #define SEAL_OUT_OF_RANGE 320
 #define SEAL_ALREADY_SEALED 330
 #define SEAL_FAILURE 340
 
-#define __BOARD_SIZE std::uint8_t
+#define BoardSize std::uint8_t
 #define BOARD_SIZE_3x3 3
 #define BOARD_SIZE_4x4 4
 #define BOARD_SIZE_5x5 5
 #define BOARD_LOWER_LIMIT 3
 #define BOARD_UPPER_LIMIT 5
 
-#define __TOKEN int
+#define Token int
 #define TOKEN_X 10
 #define TOKEN_O 20
 #define TOKEN_MIXED 30
@@ -33,7 +33,7 @@
 #define TOKEN_INITIAL 50
 #define TOKEN_AUTO 60
 
-#define __BOARD_STATE int
+#define BoardState int
 #define BOARD_STATE__X_WIN 200
 #define BOARD_STATE__O_WIN 210
 #define BOARD_STATE__DRAW 220
@@ -43,7 +43,7 @@
 
 //  TicTacToe (class)
 
-#define __GAME_STATUS int
+#define GameStatus int
 #define GAME_INITIALIZED 10
 #define GAME_WELCOME_SCREEN 20
 #define GAME_MENU_SCREEN_1 30
@@ -59,7 +59,7 @@
 
 //  (UserHandler)
 
-#define __USER_ACTION int
+#define UserAction int
 
 #define USER__PREVIOUS_MENU_PAGE 10
 #define USER__NEXT_MENU_PAGE 20
@@ -77,12 +77,12 @@
 
 // Decision
 
-#define __DIFFICULTY std::int8_t
+#define Difficulty std::int8_t
 #define HARD 10
 #define MEDIUM 20
 #define EASY 30
 
-#define __DECISION_RESPONSE int
+#define DecisionResponse int
 #define TREE_NOT_FOUND 500
 
 // AlphaBetaDetails
