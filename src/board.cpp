@@ -56,8 +56,6 @@ bool Board::undo(void) {
   _trace.pop_back();
   return true;
 }
-const Board::Meta       &Board::meta(void) { return _meta; }
-const std::vector<Step> &Board::trace(void) { return _trace; }
 bool                     Board::is_game_ended(void) {
   check_board_state();
   return (_meta.board_state == BOARD_STATE__DRAW || _meta.board_state == BOARD_STATE__X_WIN ||

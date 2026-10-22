@@ -32,11 +32,9 @@ public:
   __TOKEN         get(unsigned int y, unsigned int x);
   __SEAL_RESPONSE seal(unsigned int y, unsigned int x, bool real_move, __TOKEN token = TOKEN_AUTO);
   bool            undo(void);
-  const Meta     &meta(void);
-  const std::vector<Step> &trace(void);
-  bool                     is_game_ended(void);
-  bool                     set_predicted_successor(void);
-  __BOARD_STATE            board_state(void);
+  bool            is_game_ended(void);
+  bool            set_predicted_successor(void);
+  __BOARD_STATE   board_state(void);
   std::deque<unsigned int> successor_index_list(void);
   bool                     to_successor(unsigned int linear_index);
 
