@@ -21,6 +21,8 @@ public:
   struct {
     Coordinate predicted_move[26];
   } temp;
+  BoardMeta meta;
+  __TOKEN **_board;
 
   Board(const __BOARD_SIZE size);
   ~Board(void);
@@ -37,10 +39,6 @@ public:
   bool                     to_successor(unsigned int linear_index);
 
 private:
-  BoardMeta meta;
-
-  __TOKEN **_board;
-
   std::vector<Step> _trace;
 };
 
