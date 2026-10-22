@@ -11,32 +11,35 @@
 namespace TicTacToe {
 
 struct BoardMeta {
-  BoardMeta::BoardMeta(int size);
+  BoardMeta(int size);
+  bool       IsInside(Coordinates c);
   int        total_move_count;
   int        maximum_move_number;
   BoardSize  board_size;
   BoardState board_state;
 };
 
+struct BoardTemp {
+  Coordinates predicted_move[26];
+};
+
 class Board {
 public:
-  struct {
-    Coordinate predicted_move[26];
-  } temp;
+  BoardTemp  temp;
   BoardMeta *meta;
   Square    *board;
 
   Board(const BoardSize size);
   ~Board(void);
 
-  Token           NextToken(void);
   BoardState      CheckBoardState(void);
-  SealResponse    Seal(int y, int x, bool real_move, Token token = TOKEN_AUTO);
-  bool            Undo(void);
   bool            IsFinished(void);
   bool            SetPredictedSuccessor(void);
-  std::deque<int> SuccessorIndexList(void);
   bool            ToSuccessor(int linear_index);
+  bool            Undo(void);
+  SealResponse    Seal(Coordinates c, bool real_move, Token token = TOKEN_AUTO);
+  std::deque<int> SuccessorIndexList(void);
+  Token           NextToken(void);
 
 private:
   std::vector<Step> trace;

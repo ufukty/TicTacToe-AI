@@ -1,4 +1,5 @@
 #include "board.h"
+#include "macros.h"
 #include "square.h"
 
 namespace TicTacToe {
@@ -10,6 +11,12 @@ BoardMeta::BoardMeta(int size) {
   maximum_move_number = size * size;
 }
 
+bool isInside(int value, int low, int high) { return low <= value && value <= high; }
+
+bool BoardMeta::IsInside(Coordinates c) {
+  return isInside(c.y, 0, board_size) && isInside(c.x, 0, board_size);
+}
+
 Board::Board(const BoardSize s) {
   meta  = new BoardMeta(s);
   board = new Square(s);
@@ -18,25 +25,23 @@ Board::Board(const BoardSize s) {
 Board::~Board(void) { board->~Square(); }
 
 Token Board::NextToken(void) {
-  if (meta->board_state == BOARD_STATE__EMPTY || trace.back().token == TOKEN_O)
-    return TOKEN_X;
-  else
-    return TOKEN_O;
+  return meta->board_state == BOARD_STATE__EMPTY || trace.back().token == TOKEN_O ? TOKEN_X
+                                                                                  : TOKEN_O;
 }
 
-SealResponse Board::Seal(int y, int x, bool real_move, Token token) {
-
-  if (token == TOKEN_AUTO)
-    token = NextToken();
-
-  if (y < 0 || meta->board_size <= y || x < 0 || meta->board_size <= x)
+SealResponse Board::Seal(Coordinates c, bool real_move, Token t) {
+  if (!meta->IsInside(c)) {
     return SEAL_OUT_OF_RANGE;
-  else if (board->Get(y, x) != TOKEN_EMPTY)
+  }
+  if (board->Get(c) != TOKEN_EMPTY) {
     return SEAL_ALREADY_SEALED;
+  }
+  if (t == TOKEN_AUTO) {
+    t = NextToken();
+  }
+  trace.push_back(Step{c, t, meta->board_state, real_move});
 
-  trace.push_back(Step{y, x, token, meta->board_state, real_move});
-
-  board->Set(y, x, token);
+  board->Set(c, t);
   meta->total_move_count++;
   meta->board_state = BOARD_STATE__NOT_CALCULATED;
 
@@ -49,7 +54,7 @@ bool Board::Undo(void) {
   if (trace.size() <= 0)
     return false;
   Step last_change = trace.back();
-  board->Set(last_change.y, last_change.x, TOKEN_EMPTY);
+  board->Set(last_change.c, TOKEN_EMPTY);
   meta->total_move_count--;
   meta->board_state = last_change.board_state;
   trace.pop_back();
@@ -73,14 +78,14 @@ std::deque<int> Board::SuccessorIndexList(void) {
 }
 
 bool Board::ToSuccessor(int linear_index) {
-  return Seal((linear_index / meta->board_size), linear_index % meta->board_size, false);
+  Coordinates c = Coordinates{linear_index / meta->board_size, linear_index % meta->board_size};
+  return Seal(c, false);
 }
 
 bool Board::SetPredictedSuccessor(void) {
   if (trace.back().real_move == true)
     return false;
-  temp.predicted_move[meta->total_move_count].y = trace.back().y;
-  temp.predicted_move[meta->total_move_count].x = trace.back().x;
+  temp.predicted_move[meta->total_move_count] = trace.back().c;
   return true;
 }
 

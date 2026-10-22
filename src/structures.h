@@ -4,8 +4,10 @@
 
 namespace TicTacToe {
 
-struct Coordinate {
-  int x, y;
+struct Coordinates {
+  int y, x;
+  Coordinates() = default;
+  Coordinates(int y, int x);
 };
 
 struct Scoreboard {
@@ -13,15 +15,15 @@ struct Scoreboard {
 };
 
 struct Game_Data {
-  GameStatus status;
-  Token      turn_owner;
-  Token      user_token;
-  Token      computer_token;
-  BoardSize  board_size;
-  Difficulty difficulty;
-  int        total_move;
-  Scoreboard scoreboard;
-  Coordinate pointer;
+  GameStatus  status;
+  Token       turn_owner;
+  Token       user_token;
+  Token       computer_token;
+  BoardSize   board_size;
+  Difficulty  difficulty;
+  int         total_move;
+  Scoreboard  scoreboard;
+  Coordinates pointer;
 };
 
 struct ab_res {
@@ -29,15 +31,17 @@ struct ab_res {
 };
 
 struct Move {
-  int   y, x;
-  Token token;
+  Move() = default;
+  Move(Coordinates c, Token t);
+  Coordinates c;
+  Token       token;
 };
 
 struct Step {
-  int        y, x;
-  Token      token;
-  BoardState board_state;
-  bool       real_move; // or just calculation
+  Coordinates c;
+  Token       token;
+  BoardState  board_state;
+  bool        real_move; // or just calculation
 };
 
 } // namespace TicTacToe

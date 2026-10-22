@@ -8,11 +8,11 @@ Move Decision::decision_easy_mode(Board &board) {
   for (int y = 0; y < board.meta->board_size; y++) {
     for (int x = 0; x < board.meta->board_size; x++) {
       if (board.board->Get(y, x) == TOKEN_EMPTY)
-        available_moves.push_back({y, x, true});
+        available_moves.push_back({Coordinates{y, x}, true});
     }
   }
   if (available_moves.size() == 0)
-    return Move{-1, -1, false};
+    return Move{Coordinates{}, false};
 
   int  rnd     = rand() % available_moves.size();
   Move ret_val = available_moves[rnd];
@@ -28,22 +28,22 @@ Move Decision::decision_medium_mode(Board &board) {
   for (int y = 0; y < board.meta->board_size; y++) { // Kazanma durumları
     for (int x = 0; x < board.meta->board_size; x++) {
       if (board.board->Get(y, x) == TOKEN_EMPTY) {
-        board.Seal(y, x, false, current_token);
+        board.Seal(Coordinates{y, x}, false, current_token);
         board_state = board.CheckBoardState();
         board.Undo();
         if (board_state == win_state)
-          return {y, x};
+          return Move{Coordinates{y, x}, 0}; // FIXME: token
       }
     }
   }
   for (int y = 0; y < board.meta->board_size; y++) { // Kaybetme durumları
     for (int x = 0; x < board.meta->board_size; x++) {
       if (board.board->Get(y, x) == TOKEN_EMPTY) {
-        board.Seal(y, x, false, next_token);
+        board.Seal(Coordinates{y, x}, false, next_token);
         board_state = board.CheckBoardState();
         board.Undo();
         if (board_state == lose_state)
-          return {y, x};
+          return Move{Coordinates{y, x}, 0}; // FIXME: token
       }
     }
   }
@@ -55,9 +55,7 @@ Move Decision::decision_hard_mode(Board &board) {
     alpha_beta_max(board, NEGATIVE_INFINITY, POSITIVE_INFINITY);
   else
     alpha_beta_min(board, NEGATIVE_INFINITY, POSITIVE_INFINITY);
-
-  return Move{board.temp.predicted_move[board.meta->total_move_count + 1].y,
-              board.temp.predicted_move[board.meta->total_move_count + 1].x};
+  return Move{board.temp.predicted_move[board.meta->total_move_count + 1], 0}; // FIXME: token
 }
 
 int Decision::alpha_beta_max(Board &board, int alpha, int beta) {

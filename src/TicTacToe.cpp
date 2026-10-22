@@ -60,9 +60,8 @@ void TicTacToe::play(void) {
         move = decision_medium_mode(board);
       else
         move = decision_hard_mode(board);
-      board.Seal(move.y, move.x, true);
-      game.pointer.y = move.y;
-      game.pointer.x = move.x;
+      board.Seal(move.c, true);
+      game.pointer = move.c;
     } else { // Kullanıcının sırası
 
       user_action = input_on_game_screen(game);
@@ -77,15 +76,14 @@ void TicTacToe::play(void) {
         display_message("You can't go further lower.");
       else if (user_action == USER__HINT) {
         Move move      = decision_hard_mode(board);
-        game.pointer.y = move.y;
-        game.pointer.x = move.x;
+      game.pointer = move.c;
         display_message("This is the best move.");
       }
 
       if (user_action != USER__FILL_REQUEST)
         continue;
 
-      SealResponse response = board.Seal(game.pointer.y, game.pointer.x, true);
+      SealResponse response = board.Seal(game.pointer, true);
 
       if (response == SEAL_SUCCESS) {
         ;
