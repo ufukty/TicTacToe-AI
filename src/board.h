@@ -37,7 +37,7 @@ public:
   bool                     to_successor(unsigned int linear_index);
 
 private:
-  BoardMeta _meta;
+  BoardMeta meta;
 
   __TOKEN **_board;
 
