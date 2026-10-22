@@ -1,22 +1,11 @@
-/*
-  TicTacToe-v2.1-EN
-
-  Ufuk Tan
-  github.com/ufukty
-
-  Gameplay available at https://youtu.be/X9GnQvv_bo4
-
-  GNU General Public License v3.0
-*/
-
 #pragma once
 
-#include "TicTacToeBoard.h"
-#include "TicTacToeDecision.h"
-#include "TicTacToeMacros.h"
-#include "TicTacToeStructures.h"
-#include "TicTacToeUI.h"
-#include "TicTacToeUserHandler.h"
+#include "board.h"
+#include "decision.h"
+#include "macros.h"
+#include "structures.h"
+#include "ui.h"
+#include "userHandler.h"
 
 namespace TicTacToe {
 

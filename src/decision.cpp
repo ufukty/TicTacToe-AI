@@ -1,6 +1,5 @@
-#include "TicTacToeDecision.h"
-#include "TicTacToeBoard.h"
-#include <Windows.h>
+#include "decision.h"
+#include "board.h"
 
 namespace TicTacToe {
 

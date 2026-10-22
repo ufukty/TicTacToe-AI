@@ -1,6 +1,6 @@
-#include "TicTacToeUI.h"
-#include "TicTacToeBoard.h"
-#include <Windows.h>
+#include "ui.h"
+#include "board.h"
+#include "portable.h"
 #include <functional>
 #include <iostream>
 #include <math.h>
@@ -14,9 +14,9 @@ UI::UI(void) { ; }
 
 void UI::prepare_for_start(void) { message_flag = false; }
 
-template <typename T> void UI::set_scene(T &callback, int iteration, int interval) {
+template <typename T> void UI::set_scene(const T &callback, int iteration, int interval) {
   for (int frame = 0; frame < iteration; frame++) {
-    system("cls");
+    Clean();
     callback((double)frame / (double)iteration);
     Sleep(interval);
   }
@@ -64,8 +64,8 @@ void UI::render_opening_screen(void) {
   set_scene(
       [](double f) -> void {
         auto t = [](double t, int line_number) -> char {
-          const char tones[] = {' ', '.', '_', ';', 'ö', '*', '&', '+', (char)254, (char)220};
-          double fade = pow(sin(t * 3.1415926535 * 0.5 * 1.2 * ((double)line_number / 50 + 1)), 3);
+          const char tones[] = {' ', '.', '_', ';', 'o', '*', '&', '+', (char)254, (char)220};
+          double     fade    = pow(sin(t * M_PI * 0.5 * 1.2 * ((double)line_number / 50 + 1)), 3);
           return fade > 0 ? tones[(unsigned int)((fade * 9.99))] : tones[0];
         };
 
@@ -203,8 +203,7 @@ void UI::render_opening_screen(void) {
       [](double f) -> void {
         auto t = [](double t, int line_number) -> char {
           char   tones[] = {' ', (char)176, (char)177, (char)178, (char)219};
-          double fade    = pow(
-              sin(t * 3.1415926535 * 0.5 * (-(double)line_number / 50 + 1) + 3.1415926535 / 2), 3);
+          double fade    = pow(sin(t * M_PI * 0.5 * (-(double)line_number / 50 + 1) + M_PI / 2), 3);
           return fade > 0 ? tones[(unsigned int)((fade * 4.99))] : tones[0];
         };
 
@@ -334,16 +333,16 @@ void UI::render_opening_screen(void) {
       },
       50, 5);
 
-  system("cls");
+  Clean();
   std::cout << "\n\n\n\n\n\n\n\n\n\n\n                                        Ufuk Tan - 2017";
   Sleep(1000);
-  system("cls");
+  Clean();
 }
 
 void UI::render_menu_screen(Game_Data &game) {
   char t = (char)254;
 
-  system("cls");
+  Clean();
   header(game);
 
   if (game.status == GAME_MENU_SCREEN_1) {
@@ -528,7 +527,7 @@ void UI::display_message(const char str[]) {
 }
 
 void UI::render_game_screen(Board &board, Game_Data &game) {
-  system("cls");
+  Clean();
 
   header(game);
 

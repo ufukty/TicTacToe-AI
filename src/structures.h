@@ -1,6 +1,6 @@
 #pragma once
 
-#include "TicTacToeMacros.h"
+#include "macros.h"
 
 namespace TicTacToe {
 

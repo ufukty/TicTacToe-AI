@@ -1,5 +1,7 @@
 #pragma once
 
+#include <cstdint>
+
 #define CONSOLE_WIDTH 95
 
 #define UNDEFINED 60
@@ -16,7 +18,7 @@
 #define SEAL_ALREADY_SEALED 330
 #define SEAL_FAILURE 340
 
-#define __BOARD_SIZE unsigned __int8
+#define __BOARD_SIZE std::uint8_t
 #define BOARD_SIZE_3x3 3
 #define BOARD_SIZE_4x4 4
 #define BOARD_SIZE_5x5 5
@@ -75,7 +77,7 @@
 
 ////////////////////////////////// Decision
 
-#define __DIFFICULTY __int8
+#define __DIFFICULTY std::int8_t
 #define HARD 10
 #define MEDIUM 20
 #define EASY 30

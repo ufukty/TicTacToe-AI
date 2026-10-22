@@ -1,8 +1,8 @@
 #pragma once
 
-#include "TicTacToeBoard.h"
-#include "TicTacToeMacros.h"
-#include "TicTacToeStructures.h"
+#include "board.h"
+#include "macros.h"
+#include "structures.h"
 
 namespace TicTacToe {
 

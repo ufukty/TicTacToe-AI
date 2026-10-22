@@ -1,14 +1,14 @@
 #pragma once
 
-#include "TicTacToeBoard.h"
-#include "TicTacToeMacros.h"
-#include "TicTacToeStructures.h"
+#include "board.h"
+#include "macros.h"
+#include "structures.h"
 
 namespace TicTacToe {
 
 class UI {
 private:
-  template <typename T> void set_scene(T &callback, int iteration, int interval);
+  template <typename T> void set_scene(const T &callback, int iteration, int interval);
   void                       repeat_print(int t, char c);
   void                       repeat_str(std::string &, int t, char c);
   void                       header(Game_Data &);

@@ -1,7 +1,8 @@
 #pragma once
 
-#include "TicTacToeMacros.h"
-#include "TicTacToeStructures.h"
+#include "macros.h"
+#include "structures.h"
+#include <cstdint>
 #include <deque>
 #include <iostream>
 #include <vector>
@@ -11,15 +12,15 @@ namespace TicTacToe {
 class Board {
 public:
   struct Meta {
-    unsigned __int8 total_move_count;
-    unsigned __int8 maximum_move_number;
-    __BOARD_SIZE    board_size;
-    __BOARD_STATE   board_state;
+    std::uint8_t  total_move_count;
+    std::uint8_t  maximum_move_number;
+    __BOARD_SIZE  board_size;
+    __BOARD_STATE board_state;
   };
 
   struct {
     struct {
-      unsigned __int8 y, x;
+      std::uint8_t y, x;
     } predicted_move[26];
   } temp;
 
