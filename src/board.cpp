@@ -1,25 +1,17 @@
 #include "board.h"
+#include "square.h"
 
 namespace TicTacToe {
 
-Board::Board(BoardSize board_size) {
-  meta.board_size          = board_size;
+Board::Board(const BoardSize s) {
+  meta.board_size          = s;
   meta.total_move_count    = 0;
   meta.board_state         = BOARD_STATE__EMPTY;
-  meta.maximum_move_number = board_size * board_size;
-  _board                   = new Token *[board_size];
-  for (int y = 0; y < board_size; y++) {
-    _board[y] = new Token[board_size];
-    for (int x = 0; x < board_size; x++)
-      _board[y][x] = TOKEN_EMPTY;
-  }
+  meta.maximum_move_number = s * s;
+  board                    = new Square(s);
 }
 
-Board::~Board(void) {
-  for (int y = 0; y < meta.board_size; y++)
-    delete[] _board[y];
-  delete[] _board;
-}
+Board::~Board(void) {}
 
 Token Board::next_token(void) {
   if (meta.board_state == BOARD_STATE__EMPTY || _trace.back().token == TOKEN_O)
@@ -35,12 +27,12 @@ SealResponse Board::seal(int y, int x, bool real_move, Token token) {
 
   if (y < 0 || meta.board_size <= y || x < 0 || meta.board_size <= x)
     return SEAL_OUT_OF_RANGE;
-  else if (_board[y][x] != TOKEN_EMPTY)
+  else if (board->Get(y, x) != TOKEN_EMPTY)
     return SEAL_ALREADY_SEALED;
 
   _trace.push_back(Step{y, x, token, meta.board_state, real_move});
 
-  _board[y][x] = token;
+  board->Set(y, x, token);
   meta.total_move_count++;
   meta.board_state = BOARD_STATE__NOT_CALCULATED;
 
@@ -52,8 +44,8 @@ bool Board::undo(void) {
     return false;
   if (_trace.size() <= 0)
     return false;
-  Step last_change                     = _trace.back();
-  _board[last_change.y][last_change.x] = TOKEN_EMPTY;
+  Step last_change = _trace.back();
+  board->Set(last_change.y, last_change.x, TOKEN_EMPTY);
   meta.total_move_count--;
   meta.board_state = last_change.board_state;
   _trace.pop_back();
@@ -71,7 +63,7 @@ std::deque<int> Board::successor_index_list(void) {
   int             linear_index = 0;
   for (int y = 0; y < meta.board_size; y++)
     for (int x = 0; x < meta.board_size; x++, linear_index++)
-      if (_board[y][x] == TOKEN_EMPTY)
+      if (board->Get(y, x) == TOKEN_EMPTY)
         list.push_back(linear_index);
   return list;
 }
@@ -98,9 +90,9 @@ BoardState Board::check_board_state(void) {
   Token sequence_sum = TOKEN_INITIAL, winner = TOKEN_INITIAL;
 
   for (int y = 0; y < meta.board_size; y++) { // Yatay taramalar
-    sequence_sum = _board[y][0];
+    sequence_sum = board->Get(y, 0);
     for (int x = 1; x < meta.board_size; x++)
-      if (_board[y][x] != sequence_sum)
+      if (board->Get(y, x) != sequence_sum)
         sequence_sum = TOKEN_MIXED;
     if (sequence_sum == TOKEN_X || sequence_sum == TOKEN_O) {
       winner = sequence_sum;
@@ -109,9 +101,9 @@ BoardState Board::check_board_state(void) {
   }
   if (winner == TOKEN_INITIAL)
     for (int x = 0; x < meta.board_size; x++) { // Dikey taramalar
-      sequence_sum = _board[0][x];
+      sequence_sum = board->Get(0, x);
       for (int y = 1; y < meta.board_size; y++)
-        if (_board[y][x] != sequence_sum)
+        if (board->Get(y, x) != sequence_sum)
           sequence_sum = TOKEN_MIXED;
       if (sequence_sum == TOKEN_X || sequence_sum == TOKEN_O) {
         winner = sequence_sum;
@@ -120,9 +112,9 @@ BoardState Board::check_board_state(void) {
     }
   // Çapraz taramalar eğim=-1
   if (winner == TOKEN_INITIAL) {
-    sequence_sum = _board[0][0];
+    sequence_sum = board->Get(0, 0);
     for (int x = 1; x < meta.board_size; x++)
-      if (_board[x][x] != sequence_sum)
+      if (board->Get(x, x) != sequence_sum)
         sequence_sum = TOKEN_MIXED;
     if (sequence_sum == TOKEN_X || sequence_sum == TOKEN_O) {
       winner = sequence_sum;
@@ -130,9 +122,9 @@ BoardState Board::check_board_state(void) {
   }
   // Çapraz taramalar eğim=1
   if (winner == TOKEN_INITIAL) {
-    sequence_sum = _board[meta.board_size - 1][0];
+    sequence_sum = board->Get(meta.board_size - 1, 0);
     for (int x = 1; x < meta.board_size; x++)
-      if (_board[meta.board_size - 1 - x][x] != sequence_sum)
+      if (board->Get(meta.board_size - 1 - x, x) != sequence_sum)
         sequence_sum = TOKEN_MIXED;
     if (sequence_sum == TOKEN_X || sequence_sum == TOKEN_O) {
       winner = sequence_sum;
@@ -152,6 +144,6 @@ BoardState Board::check_board_state(void) {
   return meta.board_state;
 }
 
-Token Board::get(int y, int x) { return _board[y][x]; }
+Token Board::get(int y, int x) { return board->Get(y, x); }
 
 } // namespace TicTacToe

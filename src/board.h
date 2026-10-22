@@ -1,6 +1,7 @@
 #pragma once
 
 #include "macros.h"
+#include "square.h"
 #include "structures.h"
 #include <cstdint>
 #include <deque>
@@ -22,7 +23,7 @@ public:
     Coordinate predicted_move[26];
   } temp;
   BoardMeta meta;
-  Token   **_board;
+  Square   *board;
 
   Board(const BoardSize size);
   ~Board(void);
