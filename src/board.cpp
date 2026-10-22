@@ -14,6 +14,7 @@ Board::Board(BoardSize board_size) {
       _board[y][x] = TOKEN_EMPTY;
   }
 }
+
 Board::~Board(void) {
   for (int y = 0; y < meta.board_size; y++)
     delete[] _board[y];
@@ -26,6 +27,7 @@ Token Board::next_token(void) {
   else
     return TOKEN_O;
 }
+
 SealResponse Board::seal(unsigned int y, unsigned int x, bool real_move, Token token) {
 
   if (token == TOKEN_AUTO)
@@ -44,6 +46,7 @@ SealResponse Board::seal(unsigned int y, unsigned int x, bool real_move, Token t
 
   return SEAL_SUCCESS;
 }
+
 bool Board::undo(void) {
   if (_trace.back().real_move == true)
     return false;
@@ -56,11 +59,13 @@ bool Board::undo(void) {
   _trace.pop_back();
   return true;
 }
+
 bool Board::is_game_ended(void) {
   check_board_state();
   return (meta.board_state == BOARD_STATE__DRAW || meta.board_state == BOARD_STATE__X_WIN ||
           meta.board_state == BOARD_STATE__O_WIN);
 }
+
 std::deque<unsigned int> Board::successor_index_list(void) {
   std::deque<unsigned int> list;
   unsigned int             linear_index = 0;
@@ -70,9 +75,11 @@ std::deque<unsigned int> Board::successor_index_list(void) {
         list.push_back(linear_index);
   return list;
 }
+
 bool Board::to_successor(unsigned int linear_index) {
   return seal((linear_index / meta.board_size), linear_index % meta.board_size, false);
 }
+
 bool Board::set_predicted_successor(void) {
   if (_trace.back().real_move == true)
     return false;
@@ -80,7 +87,9 @@ bool Board::set_predicted_successor(void) {
   temp.predicted_move[meta.total_move_count].x = _trace.back().x;
   return true;
 }
+
 BoardState Board::board_state(void) { return meta.board_state; }
+
 BoardState Board::check_board_state(void) {
 
   if (meta.board_state != BOARD_STATE__NOT_CALCULATED)
@@ -142,6 +151,7 @@ BoardState Board::check_board_state(void) {
 
   return meta.board_state;
 }
+
 Token Board::get(unsigned int y, unsigned int x) { return _board[y][x]; }
 
 } // namespace TicTacToe

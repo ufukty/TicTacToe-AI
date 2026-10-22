@@ -85,6 +85,7 @@ int Decision::alpha_beta_max(Board &board, int alpha, int beta) {
 
   return alpha;
 }
+
 int Decision::alpha_beta_min(Board &board, int alpha, int beta) {
 
   if (board.is_game_ended()) // Evaluation
