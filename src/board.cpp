@@ -28,7 +28,7 @@ Token Board::next_token(void) {
     return TOKEN_O;
 }
 
-SealResponse Board::seal(unsigned int y, unsigned int x, bool real_move, Token token) {
+SealResponse Board::seal(int y, int x, bool real_move, Token token) {
 
   if (token == TOKEN_AUTO)
     token = next_token();
@@ -66,9 +66,9 @@ bool Board::is_game_ended(void) {
           meta.board_state == BOARD_STATE__O_WIN);
 }
 
-std::deque<unsigned int> Board::successor_index_list(void) {
-  std::deque<unsigned int> list;
-  unsigned int             linear_index = 0;
+std::deque<int> Board::successor_index_list(void) {
+  std::deque<int> list;
+  int             linear_index = 0;
   for (int y = 0; y < meta.board_size; y++)
     for (int x = 0; x < meta.board_size; x++, linear_index++)
       if (_board[y][x] == TOKEN_EMPTY)
@@ -76,7 +76,7 @@ std::deque<unsigned int> Board::successor_index_list(void) {
   return list;
 }
 
-bool Board::to_successor(unsigned int linear_index) {
+bool Board::to_successor(int linear_index) {
   return seal((linear_index / meta.board_size), linear_index % meta.board_size, false);
 }
 
@@ -152,6 +152,6 @@ BoardState Board::check_board_state(void) {
   return meta.board_state;
 }
 
-Token Board::get(unsigned int y, unsigned int x) { return _board[y][x]; }
+Token Board::get(int y, int x) { return _board[y][x]; }
 
 } // namespace TicTacToe

@@ -64,7 +64,7 @@ void UI::render_opening_screen(void) {
         auto t = [](double t, int line_number) -> char {
           const char tones[] = {' ', '.', '_', ';', 'o', '*', '&', '+', (char)254, (char)220};
           double     fade    = pow(sin(t * M_PI * 0.5 * 1.2 * ((double)line_number / 50 + 1)), 3);
-          return fade > 0 ? tones[(unsigned int)((fade * 9.99))] : tones[0];
+          return fade > 0 ? tones[(int)((fade * 9.99))] : tones[0];
         };
 
         auto r = []() -> char {
@@ -202,7 +202,7 @@ void UI::render_opening_screen(void) {
         auto t = [](double t, int line_number) -> char {
           char   tones[] = {' ', (char)176, (char)177, (char)178, (char)219};
           double fade    = pow(sin(t * M_PI * 0.5 * (-(double)line_number / 50 + 1) + M_PI / 2), 3);
-          return fade > 0 ? tones[(unsigned int)((fade * 4.99))] : tones[0];
+          return fade > 0 ? tones[(int)((fade * 4.99))] : tones[0];
         };
 
         std::cout << "\n";

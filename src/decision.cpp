@@ -14,8 +14,8 @@ Move Decision::decision_easy_mode(Board &board) {
   if (available_moves.size() == 0)
     return Move{-1, -1, false};
 
-  unsigned int rnd     = rand() % available_moves.size();
-  Move         ret_val = available_moves[rnd];
+  int  rnd     = rand() % available_moves.size();
+  Move ret_val = available_moves[rnd];
   return ret_val;
 }
 
@@ -65,8 +65,8 @@ int Decision::alpha_beta_max(Board &board, int alpha, int beta) {
   if (board.is_game_ended()) // Evaluation the value of leaves according to X's condition.
     return alpha_beta_evaluate(board);
 
-  int                      value;
-  std::deque<unsigned int> successors =
+  int             value;
+  std::deque<int> successors =
       board.successor_index_list(); // successor'lerin listesi oluşturuluyor
   while (successors.size() > 0) {
     board.to_successor(successors.front()); // tahta ilk ihtimal olan duruma güncelleniyor
@@ -91,8 +91,8 @@ int Decision::alpha_beta_min(Board &board, int alpha, int beta) {
   if (board.is_game_ended()) // Evaluation
     return alpha_beta_evaluate(board);
 
-  int                      value;
-  std::deque<unsigned int> successors =
+  int             value;
+  std::deque<int> successors =
       board.successor_index_list(); // successor'lerin listesi oluşturuluyor
   while (successors.size() > 0) {
     board.to_successor(successors.front()); // tahta ilk ihtimal olan duruma güncelleniyor

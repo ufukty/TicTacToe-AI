@@ -18,7 +18,7 @@
 #define SEAL_ALREADY_SEALED 330
 #define SEAL_FAILURE 340
 
-#define BoardSize std::uint8_t
+#define BoardSize int
 #define BOARD_SIZE_3x3 3
 #define BOARD_SIZE_4x4 4
 #define BOARD_SIZE_5x5 5
