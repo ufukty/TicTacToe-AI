@@ -9,19 +9,17 @@
 
 namespace TicTacToe {
 
+struct BoardMeta {
+  std::uint8_t  total_move_count;
+  std::uint8_t  maximum_move_number;
+  __BOARD_SIZE  board_size;
+  __BOARD_STATE board_state;
+};
+
 class Board {
 public:
-  struct Meta {
-    std::uint8_t  total_move_count;
-    std::uint8_t  maximum_move_number;
-    __BOARD_SIZE  board_size;
-    __BOARD_STATE board_state;
-  };
-
   struct {
-    struct {
-      std::uint8_t y, x;
-    } predicted_move[26];
+    Coordinate predicted_move[26];
   } temp;
 
   Board(const __BOARD_SIZE size);
@@ -39,7 +37,7 @@ public:
   bool                     to_successor(unsigned int linear_index);
 
 private:
-  Meta _meta;
+  BoardMeta _meta;
 
   __TOKEN **_board;
 
