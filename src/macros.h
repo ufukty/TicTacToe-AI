@@ -9,7 +9,7 @@
 #define POSITIVE_INFINITY 999999
 #define NEGATIVE_INFINITY -999999
 
-/////////////////////////////////// Board
+// Board
 
 #define __SEAL_RESPONSE int
 #define SEAL_SUCCESS 300
@@ -41,7 +41,7 @@
 #define BOARD_STATE__EMPTY 240
 #define BOARD_STATE__NOT_CALCULATED 250
 
-///////////////////////////////////  TicTacToe (class)
+//  TicTacToe (class)
 
 #define __GAME_STATUS int
 #define GAME_INITIALIZED 10
@@ -57,7 +57,7 @@
 #define GAME_ABOUT_TO_RESTART 60
 #define GAME_FINISHED 70
 
-///////////////////////////////////  (UserHandler)
+//  (UserHandler)
 
 #define __USER_ACTION int
 
@@ -75,7 +75,7 @@
 #define USER__MISSED_CASE 90
 #define USER__HINT 100
 
-////////////////////////////////// Decision
+// Decision
 
 #define __DIFFICULTY std::int8_t
 #define HARD 10
@@ -85,4 +85,4 @@
 #define __DECISION_RESPONSE int
 #define TREE_NOT_FOUND 500
 
-//////////////////////////////// AlphaBetaDetails
+// AlphaBetaDetails

@@ -2,8 +2,6 @@
 
 namespace TicTacToe {
 
-// CONSTRUCTORS
-
 Board::Board(__BOARD_SIZE board_size) {
   _meta.board_size          = board_size;
   _meta.total_move_count    = 0;
@@ -147,7 +145,5 @@ __BOARD_STATE Board::check_board_state(void) {
   return _meta.board_state;
 }
 __TOKEN Board::get(unsigned int y, unsigned int x) { return _board[y][x]; }
-
-// PRIVATE FUNCTIONS
 
 } // namespace TicTacToe

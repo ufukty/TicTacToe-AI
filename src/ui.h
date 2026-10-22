@@ -19,11 +19,9 @@ private:
 
 protected:
   void centered(std::string &);
-
   void render_opening_screen(void);
   void render_menu_screen(Game_Data &);
   void render_game_screen(Board &, Game_Data &);
-
   void display_message(const char[]);
 
 public:
