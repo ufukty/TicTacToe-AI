@@ -11,6 +11,7 @@
 namespace TicTacToe {
 
 struct BoardMeta {
+  BoardMeta::BoardMeta(int size);
   int        total_move_count;
   int        maximum_move_number;
   BoardSize  board_size;
@@ -22,8 +23,8 @@ public:
   struct {
     Coordinate predicted_move[26];
   } temp;
-  BoardMeta meta;
-  Square   *board;
+  BoardMeta *meta;
+  Square    *board;
 
   Board(const BoardSize size);
   ~Board(void);
