@@ -3,8 +3,6 @@
 #include <iostream>
 namespace TicTacToe {
 
-UserHandler::UserHandler(void) {}
-
 UserAction UserHandler::input_on_menu_screen(Game_Data &game) {
 
   std::cout << " ";

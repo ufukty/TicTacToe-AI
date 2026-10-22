@@ -15,7 +15,7 @@ Board::Board(const BoardSize s) {
   board = new Square(s);
 }
 
-Board::~Board(void) {}
+Board::~Board(void) { board->~Square(); }
 
 Token Board::NextToken(void) {
   if (meta->board_state == BOARD_STATE__EMPTY || trace.back().token == TOKEN_O)

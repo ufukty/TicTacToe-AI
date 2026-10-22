@@ -16,10 +16,6 @@ void TicTacToe::prepare_for_start() {
   UI::prepare_for_start();
 }
 
-void TicTacToe::enable_logs(void) {}
-
-void TicTacToe::print_log(std::string log) {}
-
 void TicTacToe::menu(void) {
   UserAction user_action;
 
