@@ -27,8 +27,6 @@ protected:
   void display_message(const char[]);
 
 public:
-  UI(void);
-
   void prepare_for_start(void);
 };
 

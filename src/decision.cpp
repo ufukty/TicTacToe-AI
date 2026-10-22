@@ -3,8 +3,6 @@
 
 namespace TicTacToe {
 
-Decision::Decision(void) { ; }
-
 Move Decision::decision_easy_mode(Board &board) {
   std::vector<Move> available_moves;
   for (int y = 0; y < board.meta().board_size; y++) {

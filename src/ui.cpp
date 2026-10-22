@@ -10,8 +10,6 @@
 
 namespace TicTacToe {
 
-UI::UI(void) { ; }
-
 void UI::prepare_for_start(void) { message_flag = false; }
 
 template <typename T> void UI::set_scene(const T &callback, int iteration, int interval) {
