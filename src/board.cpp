@@ -17,24 +17,24 @@ Board::Board(const BoardSize s) {
 
 Board::~Board(void) {}
 
-Token Board::next_token(void) {
-  if (meta->board_state == BOARD_STATE__EMPTY || _trace.back().token == TOKEN_O)
+Token Board::NextToken(void) {
+  if (meta->board_state == BOARD_STATE__EMPTY || trace.back().token == TOKEN_O)
     return TOKEN_X;
   else
     return TOKEN_O;
 }
 
-SealResponse Board::seal(int y, int x, bool real_move, Token token) {
+SealResponse Board::Seal(int y, int x, bool real_move, Token token) {
 
   if (token == TOKEN_AUTO)
-    token = next_token();
+    token = NextToken();
 
   if (y < 0 || meta->board_size <= y || x < 0 || meta->board_size <= x)
     return SEAL_OUT_OF_RANGE;
   else if (board->Get(y, x) != TOKEN_EMPTY)
     return SEAL_ALREADY_SEALED;
 
-  _trace.push_back(Step{y, x, token, meta->board_state, real_move});
+  trace.push_back(Step{y, x, token, meta->board_state, real_move});
 
   board->Set(y, x, token);
   meta->total_move_count++;
@@ -43,26 +43,26 @@ SealResponse Board::seal(int y, int x, bool real_move, Token token) {
   return SEAL_SUCCESS;
 }
 
-bool Board::undo(void) {
-  if (_trace.back().real_move == true)
+bool Board::Undo(void) {
+  if (trace.back().real_move == true)
     return false;
-  if (_trace.size() <= 0)
+  if (trace.size() <= 0)
     return false;
-  Step last_change = _trace.back();
+  Step last_change = trace.back();
   board->Set(last_change.y, last_change.x, TOKEN_EMPTY);
   meta->total_move_count--;
   meta->board_state = last_change.board_state;
-  _trace.pop_back();
+  trace.pop_back();
   return true;
 }
 
-bool Board::is_game_ended(void) {
-  check_board_state();
+bool Board::IsFinished(void) {
+  CheckBoardState();
   return (meta->board_state == BOARD_STATE__DRAW || meta->board_state == BOARD_STATE__X_WIN ||
           meta->board_state == BOARD_STATE__O_WIN);
 }
 
-std::deque<int> Board::successor_index_list(void) {
+std::deque<int> Board::SuccessorIndexList(void) {
   std::deque<int> list;
   int             linear_index = 0;
   for (int y = 0; y < meta->board_size; y++)
@@ -72,21 +72,19 @@ std::deque<int> Board::successor_index_list(void) {
   return list;
 }
 
-bool Board::to_successor(int linear_index) {
-  return seal((linear_index / meta->board_size), linear_index % meta->board_size, false);
+bool Board::ToSuccessor(int linear_index) {
+  return Seal((linear_index / meta->board_size), linear_index % meta->board_size, false);
 }
 
-bool Board::set_predicted_successor(void) {
-  if (_trace.back().real_move == true)
+bool Board::SetPredictedSuccessor(void) {
+  if (trace.back().real_move == true)
     return false;
-  temp.predicted_move[meta->total_move_count].y = _trace.back().y;
-  temp.predicted_move[meta->total_move_count].x = _trace.back().x;
+  temp.predicted_move[meta->total_move_count].y = trace.back().y;
+  temp.predicted_move[meta->total_move_count].x = trace.back().x;
   return true;
 }
 
-BoardState Board::board_state(void) { return meta->board_state; }
-
-BoardState Board::check_board_state(void) {
+BoardState Board::CheckBoardState(void) {
 
   if (meta->board_state != BOARD_STATE__NOT_CALCULATED)
     return meta->board_state;
@@ -147,7 +145,5 @@ BoardState Board::check_board_state(void) {
 
   return meta->board_state;
 }
-
-Token Board::get(int y, int x) { return board->Get(y, x); }
 
 } // namespace TicTacToe

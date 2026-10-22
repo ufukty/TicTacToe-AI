@@ -428,7 +428,7 @@ void UI::print_board(Board &board, Game_Data &game) {
 
   auto field = [&](int y, int x) {
     char field;
-    switch (board.get(y, x)) {
+    switch (board.board->Get(y, x)) {
     case TOKEN_X:
       field = 'X';
       break;

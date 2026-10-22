@@ -52,11 +52,11 @@ void TicTacToe::play(void) {
 
   Board board(game.board_size);
 
-  while (board.is_game_ended() == false) {
+  while (board.IsFinished() == false) {
 
     render_game_screen(board, game);
 
-    if (board.next_token() == game.computer_token) { // Bilgisayarın sırası
+    if (board.NextToken() == game.computer_token) { // Bilgisayarın sırası
       Move move;
       if (game.difficulty == EASY)
         move = decision_easy_mode(board);
@@ -64,7 +64,7 @@ void TicTacToe::play(void) {
         move = decision_medium_mode(board);
       else
         move = decision_hard_mode(board);
-      board.seal(move.y, move.x, true);
+      board.Seal(move.y, move.x, true);
       game.pointer.y = move.y;
       game.pointer.x = move.x;
     } else { // Kullanıcının sırası
@@ -89,7 +89,7 @@ void TicTacToe::play(void) {
       if (user_action != USER__FILL_REQUEST)
         continue;
 
-      SealResponse response = board.seal(game.pointer.y, game.pointer.x, true);
+      SealResponse response = board.Seal(game.pointer.y, game.pointer.x, true);
 
       if (response == SEAL_SUCCESS) {
         ;
@@ -98,21 +98,21 @@ void TicTacToe::play(void) {
       }
     }
 
-    board.check_board_state();
+    board.CheckBoardState();
   }
 
   int end;
-  if (board.board_state() == BOARD_STATE__X_WIN) {
+  if (board.meta->board_state == BOARD_STATE__X_WIN) {
     if (game.user_token == TOKEN_X)
       end = 1;
     else
       end = 2;
-  } else if (board.board_state() == BOARD_STATE__O_WIN) {
+  } else if (board.meta->board_state == BOARD_STATE__O_WIN) {
     if (game.user_token == TOKEN_X)
       end = 2;
     else
       end = 1;
-  } else if (board.board_state() == BOARD_STATE__DRAW)
+  } else if (board.meta->board_state == BOARD_STATE__DRAW)
     end = 3;
 
   if (end == 1) {
