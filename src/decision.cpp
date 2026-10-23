@@ -5,8 +5,8 @@ namespace TicTacToe {
 
 Move Decision::decision_easy_mode(Board &board) {
   std::vector<Move> available_moves;
-  for (int y = 0; y < board.meta->board_size; y++) {
-    for (int x = 0; x < board.meta->board_size; x++) {
+  for (int y = 0; y < board.meta->size; y++) {
+    for (int x = 0; x < board.meta->size; x++) {
       if (board.board->Get(y, x) == TOKEN_EMPTY)
         available_moves.push_back({Coordinates{y, x}, true});
     }
@@ -25,8 +25,8 @@ Move Decision::decision_medium_mode(Board &board) {
   BoardState win_state     = board.NextToken() == TOKEN_X ? BOARD_STATE__X_WIN : BOARD_STATE__O_WIN;
   BoardState lose_state    = board.NextToken() == TOKEN_X ? BOARD_STATE__O_WIN : BOARD_STATE__X_WIN;
   BoardState board_state;
-  for (int y = 0; y < board.meta->board_size; y++) { // Kazanma durumları
-    for (int x = 0; x < board.meta->board_size; x++) {
+  for (int y = 0; y < board.meta->size; y++) { // Kazanma durumları
+    for (int x = 0; x < board.meta->size; x++) {
       if (board.board->Get(y, x) == TOKEN_EMPTY) {
         board.Seal(Coordinates{y, x}, false, current_token);
         board_state = board.CheckBoardState();
@@ -36,8 +36,8 @@ Move Decision::decision_medium_mode(Board &board) {
       }
     }
   }
-  for (int y = 0; y < board.meta->board_size; y++) { // Kaybetme durumları
-    for (int x = 0; x < board.meta->board_size; x++) {
+  for (int y = 0; y < board.meta->size; y++) { // Kaybetme durumları
+    for (int x = 0; x < board.meta->size; x++) {
       if (board.board->Get(y, x) == TOKEN_EMPTY) {
         board.Seal(Coordinates{y, x}, false, next_token);
         board_state = board.CheckBoardState();
@@ -55,7 +55,7 @@ Move Decision::decision_hard_mode(Board &board) {
     alpha_beta_max(board, NEGATIVE_INFINITY, POSITIVE_INFINITY);
   else
     alpha_beta_min(board, NEGATIVE_INFINITY, POSITIVE_INFINITY);
-  return Move{board.temp.predicted_move[board.meta->total_move_count + 1], 0}; // FIXME: token
+  return Move{board.temp.predicted_move[board.meta->current_moves + 1], 0}; // FIXME: token
 }
 
 int Decision::alpha_beta_max(Board &board, int alpha, int beta) {
@@ -76,7 +76,7 @@ int Decision::alpha_beta_max(Board &board, int alpha, int beta) {
       board.SetPredictedSuccessor();
     }
     board.Undo(); // tahta eski haline getiriliyor.
-    if (alpha >= beta || value == 10 - board.meta->total_move_count)
+    if (alpha >= beta || value == 10 - board.meta->current_moves)
       return alpha;
   }
 
@@ -101,7 +101,7 @@ int Decision::alpha_beta_min(Board &board, int alpha, int beta) {
       board.SetPredictedSuccessor();
     }
     board.Undo(); // tahta eski haline getiriliyor.
-    if (alpha >= beta || value == board.meta->total_move_count - 10)
+    if (alpha >= beta || value == board.meta->current_moves - 10)
       return beta;
   }
 
@@ -111,10 +111,10 @@ int Decision::alpha_beta_min(Board &board, int alpha, int beta) {
 int Decision::alpha_beta_evaluate(Board &board) {
   board.CheckBoardState();
 
-  if (board.meta->board_state == BOARD_STATE__X_WIN)
-    return 10 - board.meta->total_move_count;
-  else if (board.meta->board_state == BOARD_STATE__O_WIN)
-    return board.meta->total_move_count - 10;
+  if (board.meta->state == BOARD_STATE__X_WIN)
+    return 10 - board.meta->current_moves;
+  else if (board.meta->state == BOARD_STATE__O_WIN)
+    return board.meta->current_moves - 10;
 
   return 0;
 }

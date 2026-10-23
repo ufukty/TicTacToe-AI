@@ -75,8 +75,8 @@ void TicTacToe::play(void) {
       else if (user_action == USER__MOVE_REQUEST_OUT_OF_RANGE_BOTTOM)
         display_message("You can't go further lower.");
       else if (user_action == USER__HINT) {
-        Move move      = decision_hard_mode(board);
-      game.pointer = move.c;
+        Move move    = decision_hard_mode(board);
+        game.pointer = move.c;
         display_message("This is the best move.");
       }
 
@@ -96,17 +96,17 @@ void TicTacToe::play(void) {
   }
 
   int end;
-  if (board.meta->board_state == BOARD_STATE__X_WIN) {
+  if (board.meta->state == BOARD_STATE__X_WIN) {
     if (game.user_token == TOKEN_X)
       end = 1;
     else
       end = 2;
-  } else if (board.meta->board_state == BOARD_STATE__O_WIN) {
+  } else if (board.meta->state == BOARD_STATE__O_WIN) {
     if (game.user_token == TOKEN_X)
       end = 2;
     else
       end = 1;
-  } else if (board.meta->board_state == BOARD_STATE__DRAW)
+  } else if (board.meta->state == BOARD_STATE__DRAW)
     end = 3;
 
   if (end == 1) {

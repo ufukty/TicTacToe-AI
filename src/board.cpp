@@ -5,17 +5,15 @@
 namespace TicTacToe {
 
 BoardMeta::BoardMeta(int size) {
-  board_size          = size;
-  total_move_count    = 0;
-  board_state         = BOARD_STATE__EMPTY;
-  maximum_move_number = size * size;
+  size          = size;
+  current_moves = 0;
+  state         = BOARD_STATE__EMPTY;
+  max_moves     = size * size;
 }
 
 bool isInside(int value, int low, int high) { return low <= value && value <= high; }
 
-bool BoardMeta::IsInside(Coordinates c) {
-  return isInside(c.y, 0, board_size) && isInside(c.x, 0, board_size);
-}
+bool BoardMeta::IsInside(Coordinates c) { return isInside(c.y, 0, size) && isInside(c.x, 0, size); }
 
 Board::Board(const BoardSize s) {
   meta  = new BoardMeta(s);
@@ -25,8 +23,7 @@ Board::Board(const BoardSize s) {
 Board::~Board(void) { board->~Square(); }
 
 Token Board::NextToken(void) {
-  return meta->board_state == BOARD_STATE__EMPTY || trace.back().token == TOKEN_O ? TOKEN_X
-                                                                                  : TOKEN_O;
+  return meta->state == BOARD_STATE__EMPTY || trace.back().token == TOKEN_O ? TOKEN_X : TOKEN_O;
 }
 
 SealResponse Board::Seal(Coordinates c, bool real_move, Token t) {
@@ -39,11 +36,11 @@ SealResponse Board::Seal(Coordinates c, bool real_move, Token t) {
   if (t == TOKEN_AUTO) {
     t = NextToken();
   }
-  trace.push_back(Step{c, t, meta->board_state, real_move});
+  trace.push_back(Step{c, t, meta->state, real_move});
 
   board->Set(c, t);
-  meta->total_move_count++;
-  meta->board_state = BOARD_STATE__NOT_CALCULATED;
+  meta->current_moves++;
+  meta->state = BOARD_STATE__NOT_CALCULATED;
 
   return SEAL_SUCCESS;
 }
@@ -55,50 +52,50 @@ bool Board::Undo(void) {
     return false;
   Step last_change = trace.back();
   board->Set(last_change.c, TOKEN_EMPTY);
-  meta->total_move_count--;
-  meta->board_state = last_change.board_state;
+  meta->current_moves--;
+  meta->state = last_change.board_state;
   trace.pop_back();
   return true;
 }
 
 bool Board::IsFinished(void) {
   CheckBoardState();
-  return (meta->board_state == BOARD_STATE__DRAW || meta->board_state == BOARD_STATE__X_WIN ||
-          meta->board_state == BOARD_STATE__O_WIN);
+  return (meta->state == BOARD_STATE__DRAW || meta->state == BOARD_STATE__X_WIN ||
+          meta->state == BOARD_STATE__O_WIN);
 }
 
 std::deque<int> Board::SuccessorIndexList(void) {
   std::deque<int> list;
   int             linear_index = 0;
-  for (int y = 0; y < meta->board_size; y++)
-    for (int x = 0; x < meta->board_size; x++, linear_index++)
+  for (int y = 0; y < meta->size; y++)
+    for (int x = 0; x < meta->size; x++, linear_index++)
       if (board->Get(y, x) == TOKEN_EMPTY)
         list.push_back(linear_index);
   return list;
 }
 
 bool Board::ToSuccessor(int linear_index) {
-  Coordinates c = Coordinates{linear_index / meta->board_size, linear_index % meta->board_size};
+  Coordinates c = Coordinates{linear_index / meta->size, linear_index % meta->size};
   return Seal(c, false);
 }
 
 bool Board::SetPredictedSuccessor(void) {
   if (trace.back().real_move == true)
     return false;
-  temp.predicted_move[meta->total_move_count] = trace.back().c;
+  temp.predicted_move[meta->current_moves] = trace.back().c;
   return true;
 }
 
 BoardState Board::CheckBoardState(void) {
 
-  if (meta->board_state != BOARD_STATE__NOT_CALCULATED)
-    return meta->board_state;
+  if (meta->state != BOARD_STATE__NOT_CALCULATED)
+    return meta->state;
 
   Token sequence_sum = TOKEN_INITIAL, winner = TOKEN_INITIAL;
 
-  for (int y = 0; y < meta->board_size; y++) { // Yatay taramalar
+  for (int y = 0; y < meta->size; y++) { // Yatay taramalar
     sequence_sum = board->Get(y, 0);
-    for (int x = 1; x < meta->board_size; x++)
+    for (int x = 1; x < meta->size; x++)
       if (board->Get(y, x) != sequence_sum)
         sequence_sum = TOKEN_MIXED;
     if (sequence_sum == TOKEN_X || sequence_sum == TOKEN_O) {
@@ -107,9 +104,9 @@ BoardState Board::CheckBoardState(void) {
     }
   }
   if (winner == TOKEN_INITIAL)
-    for (int x = 0; x < meta->board_size; x++) { // Dikey taramalar
+    for (int x = 0; x < meta->size; x++) { // Dikey taramalar
       sequence_sum = board->Get(0, x);
-      for (int y = 1; y < meta->board_size; y++)
+      for (int y = 1; y < meta->size; y++)
         if (board->Get(y, x) != sequence_sum)
           sequence_sum = TOKEN_MIXED;
       if (sequence_sum == TOKEN_X || sequence_sum == TOKEN_O) {
@@ -120,7 +117,7 @@ BoardState Board::CheckBoardState(void) {
   // Çapraz taramalar eğim=-1
   if (winner == TOKEN_INITIAL) {
     sequence_sum = board->Get(0, 0);
-    for (int x = 1; x < meta->board_size; x++)
+    for (int x = 1; x < meta->size; x++)
       if (board->Get(x, x) != sequence_sum)
         sequence_sum = TOKEN_MIXED;
     if (sequence_sum == TOKEN_X || sequence_sum == TOKEN_O) {
@@ -129,9 +126,9 @@ BoardState Board::CheckBoardState(void) {
   }
   // Çapraz taramalar eğim=1
   if (winner == TOKEN_INITIAL) {
-    sequence_sum = board->Get(meta->board_size - 1, 0);
-    for (int x = 1; x < meta->board_size; x++)
-      if (board->Get(meta->board_size - 1 - x, x) != sequence_sum)
+    sequence_sum = board->Get(meta->size - 1, 0);
+    for (int x = 1; x < meta->size; x++)
+      if (board->Get(meta->size - 1 - x, x) != sequence_sum)
         sequence_sum = TOKEN_MIXED;
     if (sequence_sum == TOKEN_X || sequence_sum == TOKEN_O) {
       winner = sequence_sum;
@@ -140,15 +137,15 @@ BoardState Board::CheckBoardState(void) {
 
   // Karar
   if (winner == TOKEN_X)
-    meta->board_state = BOARD_STATE__X_WIN;
+    meta->state = BOARD_STATE__X_WIN;
   else if (winner == TOKEN_O)
-    meta->board_state = BOARD_STATE__O_WIN;
-  else if (meta->maximum_move_number == meta->total_move_count)
-    meta->board_state = BOARD_STATE__DRAW;
+    meta->state = BOARD_STATE__O_WIN;
+  else if (meta->max_moves == meta->current_moves)
+    meta->state = BOARD_STATE__DRAW;
   else
-    meta->board_state = BOARD_STATE__PLAYING;
+    meta->state = BOARD_STATE__PLAYING;
 
-  return meta->board_state;
+  return meta->state;
 }
 
 } // namespace TicTacToe

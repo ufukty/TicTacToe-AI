@@ -13,10 +13,10 @@ namespace TicTacToe {
 struct BoardMeta {
   BoardMeta(int size);
   bool       IsInside(Coordinates c);
-  int        total_move_count;
-  int        maximum_move_number;
-  BoardSize  board_size;
-  BoardState board_state;
+  int        current_moves;
+  int        max_moves;
+  BoardSize  size;
+  BoardState state;
 };
 
 struct BoardTemp {
